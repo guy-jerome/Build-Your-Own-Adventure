@@ -1,0 +1,12 @@
+{
+  "name": "build-your-own-adventure",
+  "version": "1.0.0",
+  "description": "A collabrative website where that provides a framework for easily creating and sharing build-your-own-adventures.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

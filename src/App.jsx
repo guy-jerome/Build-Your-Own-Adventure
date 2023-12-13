@@ -1,14 +1,29 @@
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import { Autocomplete, Grid, InputLabel, MenuItem, Paper, Select, TextField } from '@mui/material';
-
+import { Autocomplete, Grid, InputLabel, MenuItem, Paper, Select, TextField} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete'
 
 function App() {
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [paths, setPaths] = useState([]);
+  
   const locations = [
-    {label: 'FarmHouse'}
-  ]
+    { label: 'FarmHouse' },
+    { label: 'Garden Path'}
+  ];
+
+  const handleAddPath = () => {
+    if (selectedLocation) {
+      setPaths(prevPaths => [...prevPaths, selectedLocation.label]);
+      // You can also reset the selected location if needed
+      setSelectedLocation(null);
+    }
+  };
+
   return (
     <Container>
       <Box>
@@ -22,13 +37,34 @@ function App() {
           disablePortal
           id="locations"
           options={locations}
+          value={selectedLocation}
+          onChange={(event, newValue) => setSelectedLocation(newValue)}
           renderInput={(params) => <TextField {...params} label="Locations" />}
         />
-        <Button>Add</Button>
+        <Button onClick={handleAddPath}>Add</Button>
       </Box>
-      <Grid></Grid>
+
+      {/* Display the paths */}
+      <Box >
+        {paths.map((path, index) => (
+          <Path key={index} pathName={path} />
+        ))}
+      </Box>
     </Container>
-  )
+  );
 }
 
-export default App
+function Path({ pathName }) {
+  return (
+    <>
+      <Typography variant='h3'>{pathName}</Typography>
+      <InputLabel htmlFor="path-description">Path Description</InputLabel>
+      <TextField id="path-description"></TextField>
+      <IconButton aria-label="delete" size="large">
+        <DeleteIcon fontSize="large" />
+      </IconButton>
+    </>
+  );
+}
+
+export default App;

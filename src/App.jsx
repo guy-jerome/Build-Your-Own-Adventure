@@ -1,70 +1,34 @@
-import { useState } from 'react';
-import Button from '@mui/material/Button';
+import LocationCreate from "./LocationCreate"
 import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import { Autocomplete, Grid, InputLabel, MenuItem, Paper, Select, TextField} from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete'
+import Button from '@mui/material/Button';
+import Locations from "./Locations";
+import { useState } from "react";
+import location from "./location.js";
+import { Description } from "@mui/icons-material";
 
-function App() {
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [paths, setPaths] = useState([]);
-  
-  const locations = [
-    { label: 'FarmHouse' },
-    { label: 'Garden Path'}
-  ];
 
-  const handleAddPath = () => {
-    if (selectedLocation) {
-      setPaths(prevPaths => [...prevPaths, selectedLocation.label]);
-      // You can also reset the selected location if needed
-      setSelectedLocation(null);
-    }
-  };
+export default function App(){
 
-  return (
-    <Container>
-      <Box>
-        <Typography variant="h2">Location</Typography>
-        <InputLabel htmlFor="location-name">Name</InputLabel>
-        <TextField id="location-name"></TextField>
-        <InputLabel htmlFor="location-description">Description</InputLabel>
-        <TextField id="location-description"></TextField>
-        <Typography variant='h4'>Create a Path</Typography>
-        <Autocomplete
-          disablePortal
-          id="locations"
-          options={locations}
-          value={selectedLocation}
-          onChange={(event, newValue) => setSelectedLocation(newValue)}
-          renderInput={(params) => <TextField {...params} label="Locations" />}
-        />
-        <Button onClick={handleAddPath}>Add</Button>
-      </Box>
+  const farmHouse = new location("Farm House","A small farm house." )
 
-      {/* Display the paths */}
-      <Box >
-        {paths.map((path, index) => (
-          <Path key={index} pathName={path} />
-        ))}
-      </Box>
+  const gardenPath = new location("Garden Path", "A quaint garden path.")
+
+  const [locations, setLocations] = useState([farmHouse, gardenPath])
+
+  function addLocation(location){
+    setLocations([...locations, location])
+  }
+
+  function updateLocations(){
+    setLocations([...locations])
+  }
+
+
+  return(
+    <Container sx={{display:'flex', flexDirection:'column', alignContent: 'center', justifyContent: 'center'}}>
+    <LocationCreate locations={locations} addLocation={addLocation} updateLocations={updateLocations}/>
+    <Locations locations={locations}/>
     </Container>
-  );
-}
+  )
 
-function Path({ pathName }) {
-  return (
-    <>
-      <Typography variant='h3'>{pathName}</Typography>
-      <InputLabel htmlFor="path-description">Path Description</InputLabel>
-      <TextField id="path-description"></TextField>
-      <IconButton aria-label="delete" size="large">
-        <DeleteIcon fontSize="large" />
-      </IconButton>
-    </>
-  );
 }
-
-export default App;

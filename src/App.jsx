@@ -16,7 +16,7 @@ export default function App(){
 
   const gardenPath = new location("Garden Path", "A quaint garden path.")
   const riverBank = new location("River Bank", "A small river bank.")
-  // farmHouse.paths = [gardenPath, riverBank]
+  farmHouse.paths = [gardenPath, riverBank]
   const [locations, setLocations] = useState([farmHouse, gardenPath, riverBank])
 
   function addLocation(location){

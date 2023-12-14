@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 
 import Option from './Option.jsx';
 
-export default function Game({locations}){
+export default function Game({locations, changeMode}){
     const [playerLocation, setPlayerLocation] = useState(locations[0])
 
     function changeLocation(location){

@@ -27,12 +27,16 @@ export default function App(){
     setLocations([...locations])
   }
 
+  function changeMode(mode){
+    setGameState(mode)
+  }
+
   function checkGameState(){
     switch(gameState){
       case "create":
-        return <LocationCreate locations={locations} addLocation={addLocation} updateLocations={updateLocations}/>
+        return <LocationCreate locations={locations} addLocation={addLocation} updateLocations={updateLocations} changeMode={changeMode}/>
       case "play":
-        return <Game locations={locations}/>
+        return <Game locations={locations} changeMode={changeMode}/>
       default:
         console.error("No Game State Selected")
     }

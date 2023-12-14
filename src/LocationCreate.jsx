@@ -8,7 +8,7 @@ import { Autocomplete, InputLabel, TextField} from '@mui/material';
 import Path from './Path.jsx'
 import location from "./location.js";
 import Locations from './Locations.jsx';
-export default function LocationCreate({locations,addLocation, updateLocations}) {
+export default function LocationCreate({locations,addLocation, updateLocations, changeMode}) {
 
   //STATE
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -59,13 +59,14 @@ export default function LocationCreate({locations,addLocation, updateLocations})
     setLocationDesription(location.description)
   }
 
+
   //RETURN
   return (
       <>
         <Box sx={{display:'flex', flexDirection:'column', alignContent: 'center', justifyContent: 'center'}}>
           <Box sx={{display:'flex', justifyContent: 'space-between'}}>
             <Typography variant="h2">Location</Typography>
-            <Button variant='contained'>Play</Button>
+            <Button variant='contained' onClick={()=>{changeMode("play")}}>Play</Button>
           </Box>
 
           <InputLabel htmlFor="location-name">Name</InputLabel>

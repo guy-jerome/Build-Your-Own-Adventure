@@ -12,8 +12,8 @@ export default function Game({locations}){
         setPlayerLocation(locations[locations.indexOf(location)])
     }
     return(
-        <Box sx={{bgcolor:"darkcyan"}}>
-            <Typography>{playerLocation.name}</Typography>
+        <Box sx={{bgcolor:"darkcyan", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
+            <Typography variant="h3">{playerLocation.name}</Typography>
             <Typography>{playerLocation.description}</Typography>
             <Box>
                 {

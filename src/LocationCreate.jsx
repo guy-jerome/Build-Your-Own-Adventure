@@ -63,7 +63,11 @@ export default function LocationCreate({locations,addLocation, updateLocations})
   return (
       <>
         <Box sx={{display:'flex', flexDirection:'column', alignContent: 'center', justifyContent: 'center'}}>
-          <Typography variant="h2">Location</Typography>
+          <Box sx={{display:'flex', justifyContent: 'space-between'}}>
+            <Typography variant="h2">Location</Typography>
+            <Button variant='contained'>Play</Button>
+          </Box>
+
           <InputLabel htmlFor="location-name">Name</InputLabel>
           <TextField id="location-name" value={locationName} onChange={(e)=>{setLocationName(e.target.value)}}></TextField>
           <InputLabel htmlFor="location-description">Description</InputLabel>

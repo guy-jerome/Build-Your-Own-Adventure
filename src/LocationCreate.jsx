@@ -19,15 +19,15 @@ export default function LocationCreate({locations,addLocation, updateLocations})
 
   //FUNCTIONS
   function handleAddPath(){
-    if (selectedLocation && !paths.includes(selectedLocation.label)) {
-      setPaths(prevPaths => [...prevPaths, selectedLocation.label]);
+    if (selectedLocation && !paths.includes(selectedLocation)) {
+      setPaths(prevPaths => [...prevPaths, selectedLocation]);
       // You can also reset the selected location if needed
       setSelectedLocation(null);
     }
   }
 
-  function handleDelete(pathName){
-    setPaths((prevPaths) => prevPaths.filter((path) => path !== pathName));
+  function handleDelete(path){
+    setPaths((prevPaths) => prevPaths.filter((i) => i !== path));
   }
 
   function saveLocation(){
@@ -76,7 +76,7 @@ export default function LocationCreate({locations,addLocation, updateLocations})
         {/* Display the paths */}
         <Box sx={{display:'flex',flexWrap:'wrap'}}>
           {paths.map((path, index) => (
-            <Path key={index} pathName={path} handleDelete={handleDelete} paths={paths}/>
+            <Path key={index} path={path} handleDelete={handleDelete} paths={paths}/>
           ))}
         </Box>
         <Button variant='outline' onClick={saveLocation}>Save</Button>

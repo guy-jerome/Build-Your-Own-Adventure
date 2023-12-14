@@ -1,11 +1,10 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-export default function Option(){
+export default function Option({path}){
     return(
         <Box>
-            <Typography></Typography>
-            <Button></Button>
-            </Box>
+            <Button>{path.name}</Button>
+        </Box>
     )
 }

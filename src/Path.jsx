@@ -1,9 +1,9 @@
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'
 import Typography from '@mui/material/Typography'
-import { Autocomplete, Grid, InputLabel, MenuItem, Paper, Select, TextField} from '@mui/material';
-export default function Path({ pathName, handleDelete }) {
+import { InputLabel, TextField} from '@mui/material';
 
+export default function Path({ pathName, handleDelete }) {
 
   return (
     <div>

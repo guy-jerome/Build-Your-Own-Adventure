@@ -7,7 +7,7 @@ import { Autocomplete, InputLabel, TextField} from '@mui/material';
 
 import Path from './Path.jsx'
 import location from "./location.js";
-
+import Locations from './Locations.jsx';
 export default function LocationCreate({locations,addLocation, updateLocations}) {
 
   //STATE
@@ -20,7 +20,7 @@ export default function LocationCreate({locations,addLocation, updateLocations})
   //FUNCTIONS
   function handleAddPath(){
     if (selectedLocation && !paths.includes(selectedLocation)) {
-      setPaths(prevPaths => [...prevPaths, selectedLocation]);
+      setPaths(prevPaths => [...prevPaths, {location:selectedLocation,description:""}]);
       // You can also reset the selected location if needed
       setSelectedLocation(null);
     }
@@ -52,6 +52,13 @@ export default function LocationCreate({locations,addLocation, updateLocations})
     setPaths([])
   }
 
+  function handleSetLocation(location){
+    setCurrentLocation(location)
+    setPaths(location.paths)
+    setLocationName(location.name)
+    setLocationDesription(location.description)
+  }
+
   //RETURN
   return (
       <>
@@ -80,6 +87,7 @@ export default function LocationCreate({locations,addLocation, updateLocations})
           ))}
         </Box>
         <Button variant='outline' onClick={saveLocation}>Save</Button>
+        <Locations locations={locations} handleSetLocation={handleSetLocation}/>
       </>
   );
 }

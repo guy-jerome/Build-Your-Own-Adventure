@@ -16,7 +16,7 @@ export default function App(){
 
   const gardenPath = new location("Garden Path", "A quaint garden path.")
   const riverBank = new location("River Bank", "A small river bank.")
-  farmHouse.paths = [gardenPath, riverBank]
+  farmHouse.paths = [{location:gardenPath, description:"A small Clearing in the woods"}, {location:riverBank, description:"A path leading down the river"}]
   const [locations, setLocations] = useState([farmHouse, gardenPath, riverBank])
 
   function addLocation(location){
@@ -31,8 +31,7 @@ export default function App(){
   return(
     <Container sx={{display:'flex', flexDirection:'column', alignContent: 'center', justifyContent: 'center'}}>
       <LocationCreate locations={locations} addLocation={addLocation} updateLocations={updateLocations}/>
-      <Locations locations={locations}/>
-      <Game locations = {locations}/>
+      <Game locations={locations}/>
     </Container>
   )
 

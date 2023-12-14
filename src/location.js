@@ -5,7 +5,5 @@ export default class Location{
     this.description = description
     this.paths = []
   }
-  addPath(path,pathDescription){
-    this.paths.push({path,pathDescription})
-  }
+
 }

@@ -8,7 +8,7 @@ import { Autocomplete, InputLabel, TextField} from '@mui/material';
 import Path from './Path.jsx'
 import location from "../../classes/location.js";
 import Locations from './Locations.jsx';
-export default function LocationCreate({locations,addLocation, updateLocations, changeMode}) {
+export default function LocationCreate({locations , addLocation, updateLocations, changeMode}) {
 
   //STATE
   const [selectedLocation, setSelectedLocation] = useState(null);

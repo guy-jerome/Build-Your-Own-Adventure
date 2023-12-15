@@ -8,7 +8,23 @@ import { Autocomplete, InputLabel, TextField} from '@mui/material';
 import Path from './Path.jsx'
 import location from "../../classes/location.js";
 import Locations from './Locations.jsx';
-export default function LocationCreate({locations , addLocation, updateLocations, changeMode}) {
+export default function LocationCreate() {
+
+
+  //
+  const farmHouse = new location("Farm House","A small farm house." )
+  const gardenPath = new location("Garden Path", "A quaint garden path.")
+  const riverBank = new location("River Bank", "A small river bank.")
+  farmHouse.paths = [{location:gardenPath, description:"A small Clearing in the woods"}, {location:riverBank, description:"A path leading down the river"}]
+
+  const [locations, setLocations] = useState([farmHouse, gardenPath, riverBank])
+  function addLocation(location){
+    setLocations([...locations, location])
+  }
+
+  function updateLocations(){
+    setLocations([...locations])
+  }
 
   //STATE
   const [selectedLocation, setSelectedLocation] = useState(null);

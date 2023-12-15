@@ -2,7 +2,7 @@ import {useState} from "react"
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-
+import Button from '@mui/material/Button';
 import Option from './Option.jsx';
 
 export default function Game({locations, changeMode}){
@@ -13,7 +13,10 @@ export default function Game({locations, changeMode}){
     }
     return(
         <Box sx={{bgcolor:"darkcyan", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
-            <Typography variant="h3">{playerLocation.name}</Typography>
+            <Box sx={{display:'flex', justifyContent: 'space-between'}}>
+                <Typography variant="h2">{playerLocation.name}</Typography>
+                <Button variant='contained' onClick={()=>{changeMode("create")}}>Edit</Button>
+            </Box>
             <Typography>{playerLocation.description}</Typography>
             <Box>
                 {

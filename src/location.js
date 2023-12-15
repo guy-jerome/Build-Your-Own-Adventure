@@ -5,5 +5,4 @@ export default class Location{
     this.description = description
     this.paths = []
   }
-
 }

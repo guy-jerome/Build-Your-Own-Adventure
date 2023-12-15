@@ -1,12 +1,11 @@
 import { useState } from "react";
 
-import LocationCreate from "./LocationCreate"
+import LocationCreate from "./AdventureBuilder/LocationCreate.jsx"
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button';
 
-import Locations from "./Locations";
-import location from "./location.js";
-import Game from "./Game.jsx";
+import location from "../classes/location.js";
+import Game from "./Game/Game.jsx";
 
 
 

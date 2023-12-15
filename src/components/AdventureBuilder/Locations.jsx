@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import Location from "./Location.jsx"
+import Location from "./Location"
 
 export default function Locations({locations, handleSetLocation}){
   return(

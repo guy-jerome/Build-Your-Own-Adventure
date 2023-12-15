@@ -1,5 +1,5 @@
 import { Box } from "@mui/material"
-import Adventure from "./Adventure"
+import Adventure from "../../classes/adventure"
 
 export default function Adventures(){
   <Box>

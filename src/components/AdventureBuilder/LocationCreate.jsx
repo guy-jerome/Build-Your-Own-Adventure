@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { Autocomplete, InputLabel, TextField} from '@mui/material';
 
 import Path from './Path.jsx'
-import location from "./location.js";
+import location from "../../classes/location.js";
 import Locations from './Locations.jsx';
 export default function LocationCreate({locations,addLocation, updateLocations, changeMode}) {
 

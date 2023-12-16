@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, InputLabel, TextField, Typography } from "@mui/material";
 import Adventure from "./Adventure.jsx";
 import LocationBuilder from "./LocationBuilder.jsx"
 
@@ -10,7 +10,7 @@ export default function AdventureBuilder(){
     const [currentAdventure, setCurrentAdventure] = useState(null)
 
     function handleCurrentAdventure(adventure){
-      setCurrentAdventure
+      setCurrentAdventure(adventure)
     }
 
     function handleBuilderPage(page){
@@ -22,7 +22,7 @@ export default function AdventureBuilder(){
           case "adventure":
             return <Adventure handleCurrentAdventure={handleCurrentAdventure}  handleBuilderPage={handleBuilderPage}/>
           case "location":
-            return <LocationBuilder/>
+            return <LocationBuilder currentAdventure={currentAdventure} handleBuilderPage={handleBuilderPage} setCurrentAdventure={setCurrentAdventure}/>
           case "testGame":
             return <Game/>
           default:
@@ -31,6 +31,9 @@ export default function AdventureBuilder(){
     }
 
     return(
-        checkBuilderPage()
+      <Container>
+        {checkBuilderPage()}
+      </Container>
+        
     )
 }

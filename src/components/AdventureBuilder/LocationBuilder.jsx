@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
@@ -8,10 +8,10 @@ import { Autocomplete, InputLabel, TextField} from '@mui/material';
 import Path from './Path.jsx'
 import location from "../../classes/location.js";
 import Locations from './Locations.jsx';
-export default function LocationCreate() {
+export default function LocationCreate({currentAdventure, setCurrentAdventure, handleBuilderPage}) {
 
 
-  //
+
   const farmHouse = new location("Farm House","A small farm house." )
   const gardenPath = new location("Garden Path", "A quaint garden path.")
   const riverBank = new location("River Bank", "A small river bank.")
@@ -33,6 +33,15 @@ export default function LocationCreate() {
   const [locationDescription, setLocationDesription] = useState("")
   const [currentLocation, setCurrentLocation] = useState(null)
 
+
+  useEffect(() => {
+    setCurrentAdventure(prevCurrentAdventure=> ({
+      ...prevCurrentAdventure,
+      locations: locations
+    }));
+    console.log(currentAdventure)
+  }, [locations]);
+  
   //FUNCTIONS
   function handleAddPath(){
     if (selectedLocation && !paths.includes(selectedLocation)) {

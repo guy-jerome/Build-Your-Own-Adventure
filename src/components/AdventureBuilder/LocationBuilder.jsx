@@ -34,13 +34,6 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
   const [currentLocation, setCurrentLocation] = useState(null)
 
 
-  useEffect(() => {
-    setCurrentAdventure(prevCurrentAdventure=> ({
-      ...prevCurrentAdventure,
-      locations: locations
-    }));
-    console.log(currentAdventure)
-  }, [locations]);
   
   //FUNCTIONS
   function handleAddPath(){
@@ -83,6 +76,14 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
     setLocationName(location.name)
     setLocationDesription(location.description)
   }
+
+  useEffect(()=>{
+    setCurrentAdventure(prevCurrentAdventure=> ({
+      ...prevCurrentAdventure,
+      locations: locations
+    }));
+    console.log(JSON.stringify(currentAdventure))
+  },[locations])
 
 
   //RETURN

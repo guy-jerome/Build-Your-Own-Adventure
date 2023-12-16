@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Box, Button, Container, InputLabel, TextField, Typography } from "@mui/material";
 import Adventure from "./Adventure.jsx";
 import LocationBuilder from "./LocationBuilder.jsx"
-
+import Game from "../Game/Game.jsx"
 export default function AdventureBuilder(){
     //Can be adventure/location/testGame
     const [builderPage, setBuilderPage] = useState("adventure")

@@ -3,9 +3,9 @@ import {useState} from "react"
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button';
-import Option from './Option.jsx';
 
-export default function Game({locations, changeMode}){
+
+export default function Game({locations}){
     const [playerLocation, setPlayerLocation] = useState(locations[0])
 
     function changeLocation(location){
@@ -28,5 +28,13 @@ export default function Game({locations, changeMode}){
             </Box>
         </Box>
     )
+}
 
+function Option({path, changeLocation}){
+    return(
+        <Box>
+            <Typography>{path.location.name}</Typography>
+            <Button onClick={()=>{changeLocation(path.location)}}>{path.description}</Button>
+        </Box>
+    )
 }

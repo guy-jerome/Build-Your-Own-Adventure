@@ -3,12 +3,13 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Adventures from './Adventures';
 import Container from "@mui/material/Container";
-
+import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 
 export default function Landing(){
-
+  const navigate = useNavigate()
   const {user, updateUser} = useContext(UserContext)
 
   console.log(user)
@@ -29,8 +30,9 @@ export default function Landing(){
           <Adventures/>
         </Box>
         <Box>
-          <Button>Build An Adventure</Button>
-          <Button>Login</Button>
+          <Button onClick={()=>{navigate('/builder')}}>Build An Adventure</Button>
+          <Button onClick={()=>{navigate('/login')}}>Login</Button>
+          <Button onClick={()=>{navigate('/register')}}>Register</Button>
         </Box>
       </Box>
     </Container>

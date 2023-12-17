@@ -6,7 +6,6 @@ import {
   Outlet,
 } from "react-router-dom";
 
-import Container from "@mui/material/Container";
 import Game from "./Game/Game.jsx";
 import AdventureBuilder from "./AdventureBuilder/AdventureBuilder.jsx";
 import Login from "./Login/Login.jsx";

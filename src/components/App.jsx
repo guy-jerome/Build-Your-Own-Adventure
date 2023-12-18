@@ -13,9 +13,23 @@ import Register from "./Register/Register.jsx";
 import Account from "./Account/Account.jsx";
 import Landing from "./Landing/Landing.jsx";
 
+import {useState} from "react"
 
 export default function App() {
 
+
+  const [currentAdventure, setCurrentAdventure] = useState(null)
+
+  function handleCurrentAdventure(adventure){
+    setCurrentAdventure(adventure)
+  }
+
+  async function updateAdventure(locations){
+    await setCurrentAdventure((prevCurrentAdventure) => ({
+      ...prevCurrentAdventure,
+      locations: locations,
+    }));
+  };
   return (
     <BrowserRouter>
       <Routes>
@@ -25,7 +39,7 @@ export default function App() {
         />
         <Route
           path="/builder"
-          element={ <AdventureBuilder />}
+          element={ <AdventureBuilder currentAdventure={currentAdventure} handleCurrentAdventure={handleCurrentAdventure} updateAdventure={updateAdventure}/>}
         />
         <Route
           path="/game"

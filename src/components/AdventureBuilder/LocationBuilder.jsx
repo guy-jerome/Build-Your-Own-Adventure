@@ -11,7 +11,7 @@ import path from "../../classes/path.js";
 import findLocation from '../../utils/findLocation.js';
 import Locations from './Locations.jsx';
 import { LocationSearching } from '@mui/icons-material';
-export default function LocationCreate({currentAdventure, setCurrentAdventure, handleBuilderPage}) {
+export default function LocationCreate({currentAdventure, updateAdventure, handleBuilderPage}) {
 
 
 
@@ -22,15 +22,13 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
   // const riverP = new path("River Bank","A small path leads down the road towards a river.")
   // farmHouse.paths = [gardenP,riverP]
 
-  const [locations, setLocations] = useState([])
+  const [locations, setLocations] = useState(currentAdventure.locations?currentAdventure.locations:[])
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [paths, setPaths] = useState([]);
   const [locationName, setLocationName] = useState("")
   const [locationDescription, setLocationDesription] = useState("")
   const [currentLocation, setCurrentLocation] = useState(null)
 
-
-  
   //FUNCTIONS
 
   async function addLocation(location){
@@ -84,15 +82,8 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
     setLocationDesription(location.description)
   }
 
-  async function updateAdventure(){
-    await setCurrentAdventure((prevCurrentAdventure) => ({
-      ...prevCurrentAdventure,
-      locations: locations,
-    }));
-  };
-
   useEffect(()=>{
-    updateAdventure()
+    updateAdventure(locations)
   },[locations])
 
 
@@ -102,7 +93,7 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
         <Box sx={{display:'flex', flexDirection:'column', alignContent: 'center', justifyContent: 'center'}}>
           <Box sx={{display:'flex', justifyContent: 'space-between'}}>
             <Typography variant="h2">Location</Typography>
-            <Button variant='contained' onClick={()=>{changeMode("play")}}>Play</Button>
+            <Button variant='contained' onClick={()=>{handleBuilderPage("testGame")}}>Play</Button>
           </Box>
           <InputLabel htmlFor="location-name">Name</InputLabel>
           <TextField id="location-name" value={locationName} onChange={(e)=>{setLocationName(e.target.value)}}></TextField>

@@ -4,14 +4,9 @@ import { Box, Button, Container, InputLabel, TextField, Typography } from "@mui/
 import Adventure from "./Adventure.jsx";
 import LocationBuilder from "./LocationBuilder.jsx"
 import Game from "../Game/Game.jsx"
-export default function AdventureBuilder(){
+export default function AdventureBuilder({currentAdventure,handleCurrentAdventure, updateAdventure}){
     //Can be adventure/location/testGame
     const [builderPage, setBuilderPage] = useState("adventure")
-    const [currentAdventure, setCurrentAdventure] = useState(null)
-
-    function handleCurrentAdventure(adventure){
-      setCurrentAdventure(adventure)
-    }
 
     function handleBuilderPage(page){
       setBuilderPage(page)
@@ -22,9 +17,9 @@ export default function AdventureBuilder(){
           case "adventure":
             return <Adventure handleCurrentAdventure={handleCurrentAdventure}  handleBuilderPage={handleBuilderPage}/>
           case "location":
-            return <LocationBuilder currentAdventure={currentAdventure} handleBuilderPage={handleBuilderPage} setCurrentAdventure={setCurrentAdventure}/>
+            return <LocationBuilder currentAdventure={currentAdventure} handleBuilderPage={handleBuilderPage}  updateAdventure={updateAdventure}/>
           case "testGame":
-            return <Game/>
+            return <Game currentAdventure={currentAdventure} handleCurrentAdventure={handleCurrentAdventure} handleBuilderPage={handleBuilderPage}/>
           default:
             console.error("No Valid Builder Page Selected")
         }

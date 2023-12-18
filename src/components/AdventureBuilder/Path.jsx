@@ -14,7 +14,7 @@ export default function Path({ path, handleDelete }) {
     setDescription(newDescription);
     path.description = newDescription; 
   }
-
+  
   return (
     <div>
       <Typography variant='h6'>{path.location}</Typography>

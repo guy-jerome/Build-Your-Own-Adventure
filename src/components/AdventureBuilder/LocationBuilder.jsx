@@ -71,9 +71,11 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
   }
 
   async function saveAdventure(){
-    const res = await axios.post(URL,JSON.stringify(currentAdventure))
-    console.log("SAVED ADVENTURE")
-    console.log(res)
+    const res = await axios.post('http://localhost:3000/adventures',currentAdventure)
+    console.log("NEW ADVENTURE")
+    console.log(res.data)
+    updateAdventure(res.data)
+    setLocations(currentAdventure.locations)
   }
 
   function handleNew(){
@@ -95,7 +97,8 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
   },[locations])
 
   useEffect(()=>{
-    console.log(JSON.stringify(currentAdventure))
+    console.log("CURRENT ADVENTURE")
+    console.log(currentAdventure)
   },[currentAdventure])
   //RETURN
   return (

@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 import adventureRouter from './routes/adventureRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import cors from "cors"
 
 const __dirname = process.cwd();
 
@@ -12,6 +13,7 @@ const envPath = '../.env';
 dotenv.config({ path: envPath });
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static('dist'));

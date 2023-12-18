@@ -115,7 +115,8 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
           {paths.map((path, index) => (
             <Path key={index} path={path} handleDelete={handleDelete} paths={paths}/>
           ))}
-        <Button variant='outline' onClick={saveLocation}>Save</Button>
+        <Button variant='outline' onClick={saveLocation}>Save Location</Button>
+        <Button variant='outline' onClick={saveLocation}>Save Adventure</Button>
         <Locations locations={locations} handleSetLocation={handleSetLocation}/>
       </>
   );

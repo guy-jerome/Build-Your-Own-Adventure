@@ -11,12 +11,16 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+
 
 function Copyright(props) {
+  const navigate = useNavigate()
+
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="http://localhost:5173/">
+      <Link color="inherit" href="/" onClick={(e) => {e.preventDefault() ; navigate("/");}}>
         AdventureBuilder
       </Link>{' '}
       {new Date().getFullYear()}
@@ -30,6 +34,9 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+
+  const navigate = useNavigate()
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -118,7 +125,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/login" variant="body2" onClick={(e) => {e.preventDefault() ; navigate("/login");}}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

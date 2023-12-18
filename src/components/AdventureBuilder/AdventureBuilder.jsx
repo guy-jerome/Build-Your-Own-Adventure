@@ -33,7 +33,6 @@ export default function AdventureBuilder(){
     return(
       <Container>
         {checkBuilderPage()}
-      </Container>
-        
+      </Container> 
     )
 }

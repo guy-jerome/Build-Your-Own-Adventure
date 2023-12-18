@@ -11,9 +11,11 @@ import path from "../../classes/path.js";
 import findLocation from '../../utils/findLocation.js';
 import Locations from './Locations.jsx';
 import { LocationSearching } from '@mui/icons-material';
+import axios from 'axios';
+
 export default function LocationCreate({currentAdventure, updateAdventure, handleBuilderPage}) {
 
-
+  const URL = "http://localhost:3000"
 
   // const farmHouse = new location("Farm House","A small farm house." )
   // const gardenPath = new location("Garden Path", "A quaint garden path.")
@@ -68,6 +70,12 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
     }
   }
 
+  async function saveAdventure(){
+    const res = await axios.post(URL,JSON.stringify(currentAdventure))
+    console.log("SAVED ADVENTURE")
+    console.log(res)
+  }
+
   function handleNew(){
     setCurrentLocation(null)
     setLocationDesription("")
@@ -86,7 +94,9 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
     updateAdventure(locations)
   },[locations])
 
-
+  useEffect(()=>{
+    console.log(JSON.stringify(currentAdventure))
+  },[currentAdventure])
   //RETURN
   return (
       <>
@@ -116,7 +126,7 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
             <Path key={index} path={path} handleDelete={handleDelete} paths={paths}/>
           ))}
         <Button variant='outline' onClick={saveLocation}>Save Location</Button>
-        <Button variant='outline' onClick={saveLocation}>Save Adventure</Button>
+        <Button variant='outline' onClick={saveAdventure}>Save Adventure</Button>
         <Locations locations={locations} handleSetLocation={handleSetLocation}/>
       </>
   );

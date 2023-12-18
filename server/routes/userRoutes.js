@@ -36,6 +36,18 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+// Get user by Name
+router.get('/username/:username', async (req, res) => {
+    try {
+        const user = await User.findOne({username: req.params.username });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 // Update user by ID
 router.patch('/:id', async (req, res) => {

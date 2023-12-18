@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.get('/adventures/user/:username', async (req, res) => {
+router.get('/username/:username', async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });
         if (!user) {

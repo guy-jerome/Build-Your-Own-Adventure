@@ -17,7 +17,7 @@ export default function Path({ path, handleDelete }) {
 
   return (
     <div>
-      <Typography variant='h6'>{path.location.name}</Typography>
+      <Typography variant='h6'>{path.location}</Typography>
       <InputLabel htmlFor="path-description">Path Description</InputLabel>
       <TextField id="path-description" value={description} onChange={handleChange}></TextField>
       <IconButton aria-label="delete" size="large" onClick={()=>{handleDelete(path)}}>

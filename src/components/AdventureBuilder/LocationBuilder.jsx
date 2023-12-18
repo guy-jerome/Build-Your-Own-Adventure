@@ -7,26 +7,22 @@ import { Autocomplete, InputLabel, TextField} from '@mui/material';
 
 import Path from './Path.jsx'
 import location from "../../classes/location.js";
+import path from "../../classes/path.js";
+import findLocation from '../../utils/findLocation.js';
 import Locations from './Locations.jsx';
+import { LocationSearching } from '@mui/icons-material';
 export default function LocationCreate({currentAdventure, setCurrentAdventure, handleBuilderPage}) {
 
 
 
-  const farmHouse = new location("Farm House","A small farm house." )
-  const gardenPath = new location("Garden Path", "A quaint garden path.")
-  const riverBank = new location("River Bank", "A small river bank.")
-  farmHouse.paths = [{location:gardenPath, description:"A small Clearing in the woods"}, {location:riverBank, description:"A path leading down the river"}]
+  // const farmHouse = new location("Farm House","A small farm house." )
+  // const gardenPath = new location("Garden Path", "A quaint garden path.")
+  // const riverBank = new location("River Bank", "A small river bank.")
+  // const gardenP = new path("Garden Path","A small path leads down to a small garden.")
+  // const riverP = new path("River Bank","A small path leads down the road towards a river.")
+  // farmHouse.paths = [gardenP,riverP]
 
-  const [locations, setLocations] = useState([farmHouse, gardenPath, riverBank])
-  function addLocation(location){
-    setLocations([...locations, location])
-  }
-
-  function updateLocations(){
-    setLocations([...locations])
-  }
-
-  //STATE
+  const [locations, setLocations] = useState([])
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [paths, setPaths] = useState([]);
   const [locationName, setLocationName] = useState("")
@@ -36,11 +32,21 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
 
   
   //FUNCTIONS
+
+  async function addLocation(location){
+    await setLocations([...locations, location])
+  }
+
+  async function updateLocations(){
+    await setLocations([...locations])
+  }
+
   function handleAddPath(){
-    if (selectedLocation && !paths.includes(selectedLocation)) {
-      setPaths(prevPaths => [...prevPaths, {location:selectedLocation,description:""}]);
+    if (selectedLocation) {
+      setPaths(prevPaths => [...prevPaths, new path(selectedLocation.name)]);
       // You can also reset the selected location if needed
       setSelectedLocation(null);
+      
     }
   }
 
@@ -48,18 +54,19 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
     setPaths((prevPaths) => prevPaths.filter((i) => i !== path));
   }
 
-  function saveLocation(){
+  async function saveLocation(){
     if (!currentLocation){
-      const node = new location(locationName,locationDescription,)
+      const node = new location(locationName,locationDescription)
       node.paths = paths
-      addLocation(node)
+      await addLocation(node)
       setCurrentLocation(node)
+      
     }else{
       currentLocation.name = locationName
       currentLocation.label = locationName
       currentLocation.description = locationDescription
       currentLocation.paths = paths
-      updateLocations()
+      await updateLocations()  
     }
   }
 
@@ -77,12 +84,15 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
     setLocationDesription(location.description)
   }
 
-  useEffect(()=>{
-    setCurrentAdventure(prevCurrentAdventure=> ({
+  async function updateAdventure(){
+    await setCurrentAdventure((prevCurrentAdventure) => ({
       ...prevCurrentAdventure,
-      locations: locations
+      locations: locations,
     }));
-    console.log(JSON.stringify(currentAdventure))
+  };
+
+  useEffect(()=>{
+    updateAdventure()
   },[locations])
 
 
@@ -94,7 +104,6 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
             <Typography variant="h2">Location</Typography>
             <Button variant='contained' onClick={()=>{changeMode("play")}}>Play</Button>
           </Box>
-
           <InputLabel htmlFor="location-name">Name</InputLabel>
           <TextField id="location-name" value={locationName} onChange={(e)=>{setLocationName(e.target.value)}}></TextField>
           <InputLabel htmlFor="location-description">Description</InputLabel>
@@ -112,11 +121,9 @@ export default function LocationCreate({currentAdventure, setCurrentAdventure, h
           <Button onClick={handleNew}>New</Button>
         </Box>
         {/* Display the paths */}
-        <Box sx={{display:'flex',flexWrap:'wrap'}}>
           {paths.map((path, index) => (
             <Path key={index} path={path} handleDelete={handleDelete} paths={paths}/>
           ))}
-        </Box>
         <Button variant='outline' onClick={saveLocation}>Save</Button>
         <Locations locations={locations} handleSetLocation={handleSetLocation}/>
       </>

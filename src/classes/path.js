@@ -1,5 +1,5 @@
 export default class Path{
-  constructor(location, description="Empty Description"){
+  constructor(location, description=""){
     this.location = location;
     this.description = description;
   }

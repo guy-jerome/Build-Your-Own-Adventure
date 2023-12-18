@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 // Define Path schema
 const pathSchema = new mongoose.Schema({
-    description: {
+    location: {
         type: String,
         required: true,
     },
-    location: {
+    description: {
         type: String,
         required: true,
     },

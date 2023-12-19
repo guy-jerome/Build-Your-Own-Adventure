@@ -17,7 +17,7 @@ export default function AdventureBuilder({currentAdventure,handleCurrentAdventur
           case "adventure":
             return <Adventure handleCurrentAdventure={handleCurrentAdventure}  handleBuilderPage={handleBuilderPage}/>
           case "location":
-            return <LocationBuilder currentAdventure={currentAdventure} handleBuilderPage={handleBuilderPage}  updateAdventure={updateAdventure}/>
+            return <LocationBuilder currentAdventure={currentAdventure} handleBuilderPage={handleBuilderPage} handleCurrentAdventure={handleCurrentAdventure} updateAdventure={updateAdventure}/>
           case "testGame":
             return <Game currentAdventure={currentAdventure} handleCurrentAdventure={handleCurrentAdventure} handleBuilderPage={handleBuilderPage}/>
           default:

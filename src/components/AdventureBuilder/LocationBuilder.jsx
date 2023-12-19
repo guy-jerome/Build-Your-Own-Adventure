@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 
-export default function LocationCreate({currentAdventure, updateAdventure, handleBuilderPage}) {
+export default function LocationCreate({currentAdventure, updateAdventure, handleBuilderPage, handleCurrentAdventure}) {
 
   const {user, updateUser, url} = useContext(UserContext)
 
@@ -74,9 +74,8 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
 
   async function saveAdventure(){
     const res = await axios.post(`${url}/adventures`,currentAdventure)
-    console.log("NEW ADVENTURE")
     console.log(res.data)
-    updateAdventure(res.data)
+    handleCurrentAdventure(res.data)
     setLocations(currentAdventure.locations)
   }
 
@@ -98,10 +97,6 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
     updateAdventure(locations)
   },[locations])
 
-  useEffect(()=>{
-    console.log("CURRENT ADVENTURE")
-    console.log(currentAdventure)
-  },[currentAdventure])
   //RETURN
   return (
       <>

@@ -39,7 +39,7 @@ export default function Adventures({ currentAdventure, handleCurrentAdventure })
             fullWidth
             sx={{ marginBottom: 2 }}
           >
-            {adventure.name}
+            {`${adventure.name} Created By: ${adventure.username}`}
           </Button>
         ))
       ) : (

@@ -17,8 +17,30 @@ router.post('/', async (req, res) => {
 // Get all adventures
 router.get('/', async (req, res) => {
     try {
-        const adventures = await Adventure.find();
-        res.json(adventures);
+        const adventuresWithUsernames = await Adventure.aggregate([
+            {
+                $lookup: {
+                    from: 'users', // The name of the collection to join with (case-sensitive)
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            {
+                $unwind: '$user' // Unwind the user array created by the $lookup stage
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    description: 1,
+                    locations: 1,
+                    username: '$user.username' // Include the username from the user document
+                }
+            }
+        ]);
+
+        res.status(200).json(adventuresWithUsernames);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

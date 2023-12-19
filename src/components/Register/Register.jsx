@@ -7,11 +7,13 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate, useContext} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import {useContext, useState} from 'react'
 import { UserContext } from '../../context/UserContext';
 import axios from 'axios';
 
@@ -35,13 +37,35 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const { url } = useContext(UserContext);
+  const { url, user, updateUser } = useContext(UserContext);
   const navigate = useNavigate()
-  
+  const [errorMessage, setErrorMessage] = useState('');
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    results = await axios.post(`${url}/users`)
+    try {
+      const results = await axios.post(`${url}/user`, {
+        username: data.get('username'),
+        password: data.get('password')
+      });
+      updateUser(results.data)
+      // Handle successful response
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrorMessage('Username is not available');
+        setUsernameError(true);
+        setPasswordError(false); // Reset password error if previously set
+      } else {
+        setErrorMessage('An error occurred. Please try again later.');
+        // Reset both errors if the error is not related to username availability
+        setUsernameError(false);
+        setPasswordError(false);
+      }
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -62,7 +86,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center"}}>
             <Grid container spacing={2}>
               {/* <Grid item xs={12} sm={6}>
                 <TextField
@@ -86,25 +110,38 @@ export default function SignUp() {
                 />
               </Grid> */}
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                />
+                <FormControl fullWidth error={usernameError}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
+                    error={usernameError}
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                <FormControl fullWidth error={passwordError} sx={{ mt: 2 }}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    error={passwordError}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} container justifyContent="center">
+                {errorMessage && (
+                <Typography variant="body2" color="error">
+                {errorMessage}
+                </Typography>
+                )}
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel

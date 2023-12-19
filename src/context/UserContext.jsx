@@ -18,8 +18,18 @@ const UserProvider = ({ children }) => {
     setUser(newUser);
   };
 
+  let URL = ""
+  if (process.env.NODE_ENV === "development"){
+    console.log("Running in Dev mode")
+    URL = "http://localhost:3000" 
+  }else if (process.env.NODE_ENV === 'production'){
+    console.log("Running in Production")
+  }
+
+  const [url, setURL] = useState(URL)
+
   return (
-    <UserContext.Provider value={{ user, updateUser }}>
+    <UserContext.Provider value={{ user, updateUser, url }}>
       {children}
     </UserContext.Provider>
   );

@@ -12,17 +12,12 @@ import findLocation from '../../utils/findLocation.js';
 import Locations from './Locations.jsx';
 import { LocationSearching } from '@mui/icons-material';
 import axios from 'axios';
-
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 
 export default function LocationCreate({currentAdventure, updateAdventure, handleBuilderPage}) {
 
-  let URL = ""
-  if (process.env.NODE_ENV === "development"){
-    console.log("Running in Dev mode")
-    URL = "http://localhost:3000" 
-  }else if (process.env.NODE_ENV === 'production'){
-    console.log("Running in Production")
-  }
+  const {user, updateUser, url} = useContext(UserContext)
 
   // const farmHouse = new location("Farm House","A small farm house." )
   // const gardenPath = new location("Garden Path", "A quaint garden path.")
@@ -78,7 +73,7 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
   }
 
   async function saveAdventure(){
-    const res = await axios.post(`${URL}/adventures`,currentAdventure)
+    const res = await axios.post(`${url}/adventures`,currentAdventure)
     console.log("NEW ADVENTURE")
     console.log(res.data)
     updateAdventure(res.data)

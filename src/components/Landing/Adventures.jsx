@@ -27,7 +27,7 @@ export default function Adventures({ currentAdventure, handleCurrentAdventure })
   }
 
   return (
-    <Box>
+    <Box sx={{p:4}}>
       {adventures ? (
         adventures.map((adventure) => (
           <Button
@@ -35,9 +35,9 @@ export default function Adventures({ currentAdventure, handleCurrentAdventure })
             onClick={() => playGame(adventure)}
             variant="contained"
             color="primary"
-            size="large"
+            size="small"
             fullWidth
-            sx={{ marginBottom: 2 }}
+            sx={{ marginBottom: 1 }}
           >
             {`${adventure.name} Created By: ${adventure.username}`}
           </Button>

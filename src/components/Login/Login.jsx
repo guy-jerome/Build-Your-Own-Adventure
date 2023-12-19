@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import {useContext, useState} from 'react'
+import { UserContext } from '../../context/UserContext';
+import axios from 'axios';
 
 function Copyright(props) {
   const navigate = useNavigate()
@@ -32,14 +35,35 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Login() {
+  const { url, user, updateUser } = useContext(UserContext);
   const navigate = useNavigate()
-  const handleSubmit = (event) => {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    try {
+      const results = await axios.post(`${url}/user`, {
+        username: data.get('username'),
+        password: data.get('password')
+      });
+      updateUser(results.data)
+      
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrorMessage('Username is not available');
+        setUsernameError(true);
+        setPasswordError(false); // Reset password error if previously set
+      } else {
+        setErrorMessage('An error occurred. Please try again later.');
+        // Reset both errors if the error is not related to username availability
+        setUsernameError(false);
+        setPasswordError(false);
+      }
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -82,9 +106,9 @@ export default function Login() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                label="Username"
+                name="username"
+                autoComplete="username"
                 autoFocus
               />
               <TextField

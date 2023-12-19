@@ -28,13 +28,29 @@ export default function Landing({currentAdventure, handleCurrentAdventure}){
       <Typography variant='h2'>Adventure Builder</Typography>
       <Box>
         <Box>
-          <Typography variant='h5'>Featured Adventures</Typography>
-          <Adventures currentAdventure={currentAdventure} handleCurrentAdventure={handleCurrentAdventure}/>
+          {/* This is only during production */}
+          {/* {
+          user.username ? (
+            <>
+            <Button onClick={()=>{navigate('/builder')}}>Build An Adventure</Button>
+            <Button>{`Go to ${user.username}'s Profile`}</Button>
+            </>
+
+          ):(
+            <>
+            <Button onClick={()=>{navigate('/login')}}>Login</Button>
+            <Button onClick={()=>{navigate('/register')}}>Register</Button>
+            </>
+          )
+          } */}
+            <Button onClick={()=>{navigate('/builder')}}>Build An Adventure</Button>
+            <Button>{`Go to ${user.username}'s Profile`}</Button>
+            <Button onClick={()=>{navigate('/login')}}>Login</Button>
+            <Button onClick={()=>{navigate('/register')}}>Register</Button>
         </Box>
         <Box>
-          <Button onClick={()=>{navigate('/builder')}}>Build An Adventure</Button>
-          <Button onClick={()=>{navigate('/login')}}>Login</Button>
-          <Button onClick={()=>{navigate('/register')}}>Register</Button>
+          <Typography variant='h5'>Featured Adventures</Typography>
+          <Adventures currentAdventure={currentAdventure} handleCurrentAdventure={handleCurrentAdventure}/>
         </Box>
       </Box>
     </Container>

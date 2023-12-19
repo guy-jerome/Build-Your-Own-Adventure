@@ -6,9 +6,17 @@ const router = express.Router();
 // Create a new user
 router.post('/', async (req, res) => {
     try {
+        if (!req.body.username || typeof req.body.username !== 'string' || req.body.username.trim() === '') {
+            return res.status(400).json({ message: "Username is required and must be a non-empty string" });
+        }
+        const existingUser = await User.findOne({ username: req.body.username });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists" });
+        }
         const newUser = new User(req.body);
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
+        
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

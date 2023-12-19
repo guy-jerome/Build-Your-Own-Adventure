@@ -35,7 +35,7 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={<Landing/>}
+          element={<Landing currentAdventure={currentAdventure} handleCurrentAdventure={handleCurrentAdventure}/>}
         />
         <Route
           path="/builder"
@@ -43,7 +43,7 @@ export default function App() {
         />
         <Route
           path="/game"
-          element={ <Game/>}
+          element={ <Game currentAdventure={currentAdventure} />}
         />
         <Route
           path="/login"

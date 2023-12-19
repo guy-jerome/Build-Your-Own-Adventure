@@ -8,11 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 
-export default function Landing(){
+
+
+export default function Landing({currentAdventure, handleCurrentAdventure}){
   const navigate = useNavigate()
   const {user, updateUser} = useContext(UserContext)
 
-  console.log(user)
+
   return(
     <Container
     maxWidth="lg"
@@ -27,7 +29,7 @@ export default function Landing(){
       <Box>
         <Box>
           <Typography variant='h5'>Featured Adventures</Typography>
-          <Adventures/>
+          <Adventures currentAdventure={currentAdventure} handleCurrentAdventure={handleCurrentAdventure}/>
         </Box>
         <Box>
           <Button onClick={()=>{navigate('/builder')}}>Build An Adventure</Button>

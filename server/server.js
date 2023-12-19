@@ -8,15 +8,15 @@ import cors from "cors"
 
 const __dirname = process.cwd();
 
-const envPath = '../.env';
+//const envPath = '../.env';
 
-dotenv.config({ path: envPath });
+dotenv.config();
 
 const app = express();
 app.use(cors());
 const port = process.env.PORT || 3000;
 app.use(express.json());
-app.use(express.static(path.join(__dirname,'..', 'dist')));
+app.use(express.static( 'dist'));
 
 mongoose.connect(process.env.MONGODB);
 
@@ -34,7 +34,7 @@ app.use('/user', userRouter);
 
 // Catch-all route to serve the index.html
 app.get('*', (req, res) => {
-  const filePath = path.join(__dirname,'..', 'dist', 'index.html');
+  const filePath = path.join(__dirname, 'dist', 'index.html');
   res.sendFile(filePath);
 });
 

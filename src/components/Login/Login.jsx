@@ -45,15 +45,15 @@ export default function Login() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const results = await axios.post(`${url}/user`, {
+      const results = await axios.post(`${url}/user/login`, {
         username: data.get('username'),
         password: data.get('password')
       });
       updateUser(results.data)
       
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setErrorMessage('Username is not available');
+      if (error.response && error.response.status === 404) {
+        setErrorMessage('No such username found');
         setUsernameError(true);
         setPasswordError(false); // Reset password error if previously set
       } else {
@@ -105,7 +105,7 @@ export default function Login() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
+                id="username"
                 label="Username"
                 name="username"
                 autoComplete="username"

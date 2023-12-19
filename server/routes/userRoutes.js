@@ -45,11 +45,14 @@ router.get('/:id', async (req, res) => {
     }
 });
 // Get user by Name
-router.get('/username/:username', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
-        const user = await User.findOne({username: req.params.username });
+        const user = await User.findOne({username: req.body.username });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
+        }
+        if(user.password !== req.body.password){
+            return res.status(401).json({ message: 'Incorrect Password' });
         }
         res.json(user);
     } catch (error) {

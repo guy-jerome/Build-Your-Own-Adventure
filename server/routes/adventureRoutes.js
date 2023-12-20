@@ -1,93 +1,102 @@
-import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import { UserContext } from '../../context/UserContext';
-import Banner from '../Banner/Banner';
+import express from 'express';
+import {User,Adventure} from '../adventureSchema.js';
 
-export default function Account() {
-  const { user, url } = useContext(UserContext);
-  const [userAdventures, setUserAdventures] = useState(null);
-  const [loading, setLoading] = useState(true);
+const router = express.Router();
 
-  useEffect(() => {
-    async function getAdventures() {
-      try {
-        const req = await axios.get(`${url}/adventures/user/${user.username}`);
-        setUserAdventures(req.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
+// Create a new adventure
+router.post('/', async (req, res) => {
+    try {
+        const newAdventure = new Adventure(req.body);
+        const savedAdventure = await newAdventure.save();
+        res.status(201).json(savedAdventure);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-    getAdventures();
-  }, [url, user.username]);
+});
 
-  return (
-    <Container>
-      <Banner />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          backgroundColor: 'tan',
-          p: 10,
-          minHeight: '100vh',
-        }}
-      >
-        <Typography variant="h4" sx={{ p: 2, m: 2 }}>
-          User Account
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignSelf: 'flex-start',
-            p: 2,
-            border: 4,
-            borderColor: 'primary.main',
-            borderRadius: 4,
-            marginBottom: 4,
-          }}
-        >
-          <Typography variant="h4">Username</Typography>
-          <Typography variant="h5">{user.username}</Typography>
-        </Box>
-        <Typography variant="h4">Your Adventures</Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignSelf: 'center',
-            p: 2,
-            border: 4,
-            borderColor: 'primary.main',
-            borderRadius: 4,
-            alignItems: 'center',
-          }}
-        >
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            userAdventures &&
-            userAdventures.map((adventure) => (
-              <Box key={adventure._id} sx={{ display: 'flex', alignItems: 'center', my: 1 }}>
-                <Button variant="outlined" sx={{ mr: 1 }}>
-                  {adventure.name}
-                </Button>
+// Get all adventures
+router.get('/', async (req, res) => {
+    try {
+        const adventuresWithUsernames = await Adventure.aggregate([
+            {
+                $lookup: {
+                    from: 'users', // The name of the collection to join with (case-sensitive)
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            {
+                $unwind: '$user' // Unwind the user array created by the $lookup stage
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    description: 1,
+                    locations: 1,
+                    username: '$user.username' // Include the username from the user document
+                }
+            }
+        ]);
 
-              </Box>
-            ))
-          )}
-        </Box>
-      </Box>
-    </Container>
-  );
-}
+        res.status(200).json(adventuresWithUsernames);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Get a specific adventure by ID
+router.get('/:id', async (req, res) => {
+    try {
+        const adventure = await Adventure.findById(req.params.id);
+        if (!adventure) {
+            return res.status(404).json({ message: 'Adventure not found' });
+        }
+        res.json(adventure);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+// Get by adventure
+router.get('/user/:username', async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const adventures = await Adventure.find({ userId: user._id });
+        res.json(adventures);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Update an adventure by ID
+router.patch('/:id', async (req, res) => {
+    try {
+        const updatedAdventure = await Adventure.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedAdventure) {
+            return res.status(404).json({ message: 'Adventure not found' });
+        }
+        res.json(updatedAdventure);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Delete an adventure by ID
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedAdventure = await Adventure.findByIdAndDelete(req.params.id);
+        if (!deletedAdventure) {
+            return res.status(404).json({ message: 'Adventure not found' });
+        }
+        res.json(deletedAdventure);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+export default router;

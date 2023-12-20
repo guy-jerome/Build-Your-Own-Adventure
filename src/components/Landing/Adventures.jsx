@@ -21,6 +21,10 @@ export default function Adventures({ handleCurrentAdventure }) {
     getAdventures();
   }, [url]);
 
+  const interval = setInterval(() => {
+    getAdventures();
+  }, 1000);
+
   function playGame(adventure) {
     handleCurrentAdventure(adventure);
     navigate('/game');

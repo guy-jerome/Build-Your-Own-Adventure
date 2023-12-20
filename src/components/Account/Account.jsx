@@ -36,6 +36,11 @@ export default function Account({handleCurrentAdventure}) {
     navigate('/game');
   }
 
+  function editAdventure(adventure){
+    handleCurrentAdventure(adventure)
+    navigate('/builder')
+  }
+
   return (
     <Container>
       <Banner />
@@ -56,7 +61,7 @@ export default function Account({handleCurrentAdventure}) {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            alignSelf: 'flex-start',
+            alignSelf: 'center',
             p: 2,
             border: 4,
             borderColor: 'primary.main',
@@ -91,7 +96,7 @@ export default function Account({handleCurrentAdventure}) {
                 <Button variant="contained" onClick={()=>{playGame(adventure)}}>
                   {adventure.name}
                 </Button>
-                <IconButton aria-label="edit">
+                <IconButton aria-label="edit" onClick={()=>{editAdventure(adventure)}}>
                   <EditIcon />
                 </IconButton>
               </Box>

@@ -4,7 +4,7 @@ import { UserContext } from '../../context/UserContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function Adventures({ currentAdventure, handleCurrentAdventure }) {
+export default function Adventures({ handleCurrentAdventure }) {
   const { url } = useContext(UserContext);
   const [adventures, setAdventures] = useState(null);
   const navigate = useNavigate();

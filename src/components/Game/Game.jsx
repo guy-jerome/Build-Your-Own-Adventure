@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,18 +9,22 @@ import Banner from "../Banner/Banner.jsx"
 export default function Game({ currentAdventure, handleBuilderPage }) {
   const navigate = useNavigate();
   const [playerLocation, setPlayerLocation] = useState(
-    currentAdventure.locations[0]
+    currentAdventure.locations[0]?currentAdventure.locations[0]:null
   );
+
+
 
   const changeLocation = (location) => {
     setPlayerLocation(
       currentAdventure.locations[currentAdventure.locations.indexOf(location)]
     );
   };
+  useEffect(()=>{
+    if (!currentAdventure) navigate("/")
+  },[])
 
   return (
     <Container >
-    <Banner/>
     <Box
       sx={{
         bgcolor: "accent.main",

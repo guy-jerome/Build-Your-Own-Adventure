@@ -13,7 +13,6 @@ export default function Adventure({ handleCurrentAdventure, handleBuilderPage}) 
 
   const handleStartCreating = () => {
     // Create an instance of the Adventure class with the provided title and description
-    console.log(user._id)
     const newAdventure = new adventure(title, description,user._id );
     handleCurrentAdventure(newAdventure)
     handleBuilderPage("location")

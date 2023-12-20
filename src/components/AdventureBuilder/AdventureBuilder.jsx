@@ -7,16 +7,16 @@ import Game from "../Game/Game.jsx"
 import Banner from "../Banner/Banner.jsx"
 export default function AdventureBuilder({currentAdventure, handleCurrentAdventure, updateAdventure}){
     //Can be adventure/location/testGame
-    const [builderPage, setBuilderPage] = useState("adventure")
 
+    const [builderPage, setBuilderPage] = useState(currentAdventure?"location":"adventure")
+  
     function handleBuilderPage(page){
       setBuilderPage(page)
     }
-
     function checkBuilderPage(){
         switch(builderPage){
           case "adventure":
-            return <Adventure handleCurrentAdventure={handleCurrentAdventure}  handleBuilderPage={handleBuilderPage}/>
+            return <Adventure handleCurrentAdventure={handleCurrentAdventure}  handleBuilderPage={handleBuilderPage} currentAdventure={currentAdventure}/>
           case "location":
             return <LocationBuilder currentAdventure={currentAdventure} handleBuilderPage={handleBuilderPage} handleCurrentAdventure={handleCurrentAdventure} updateAdventure={updateAdventure}/>
           case "testGame":
@@ -31,9 +31,10 @@ export default function AdventureBuilder({currentAdventure, handleCurrentAdventu
       sx={{
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "accent.main",
       }}>
-        <Banner/>
+        {
+          builderPage!=="testGame"&&<Banner/>
+        }
         {checkBuilderPage()}
       </Container> 
     )

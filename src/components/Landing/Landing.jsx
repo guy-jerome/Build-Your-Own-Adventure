@@ -19,7 +19,7 @@ export default function Landing({currentAdventure, handleCurrentAdventure}){
   },[])
   return(
     <Container
-    maxWidth="md"
+    maxWidth="lg"
     sx={{
       display: "flex",
       flexDirection: "column",
@@ -29,7 +29,7 @@ export default function Landing({currentAdventure, handleCurrentAdventure}){
     }}
     >
       
-      <Box sx={{backgroundColor: "accent.main"}}>
+      <Box sx={{backgroundColor: "accent.main", height:"100vh"}}>
       <Banner/>
         <Box>
           {/* This is only during production */}

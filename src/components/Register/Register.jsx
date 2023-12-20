@@ -52,6 +52,7 @@ export default function SignUp() {
         password: data.get('password')
       });
       updateUser(results.data)
+      navigate("/")
       // Handle successful response
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -64,7 +65,6 @@ export default function SignUp() {
         setUsernameError(false);
         setPasswordError(false);
       }
-      console.error('Error:', error);
     }
   };
 

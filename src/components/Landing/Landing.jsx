@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
-
+import Banner from '../Banner/Banner.jsx'
 
 
 export default function Landing({currentAdventure, handleCurrentAdventure}){
@@ -25,7 +25,7 @@ export default function Landing({currentAdventure, handleCurrentAdventure}){
       justifyContent: "center",
     }}
     >
-      <Typography variant='h2'>Adventure Builder</Typography>
+      <Banner/>
       <Box>
         <Box>
           {/* This is only during production */}

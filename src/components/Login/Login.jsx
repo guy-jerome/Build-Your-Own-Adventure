@@ -8,6 +8,7 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import FormControl from '@mui/material/FormControl'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -50,19 +51,22 @@ export default function Login() {
         password: data.get('password')
       });
       updateUser(results.data)
-      
+      navigate("/")
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setErrorMessage('No such username found');
         setUsernameError(true);
         setPasswordError(false); // Reset password error if previously set
-      } else {
+      } else if (error.response && error.response.status === 401){
+        setErrorMessage('Incorrect Password')
+        setUsernameError(false)
+        setPasswordError(true)
+      }else {
         setErrorMessage('An error occurred. Please try again later.');
         // Reset both errors if the error is not related to username availability
         setUsernameError(false);
         setPasswordError(false);
       }
-      console.error('Error:', error);
     }
   };
 
@@ -101,26 +105,39 @@ export default function Login() {
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+              <FormControl fullWidth error={usernameError}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  error={usernameError}
+                />
+              </FormControl>
+              <FormControl fullWidth error={passwordError} sx={{ mt: 2 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  error={passwordError}
+                />
+              </FormControl>
+              <Grid item xs={12} container justifyContent="center">
+                {errorMessage && (
+                <Typography variant="body2" color="error">
+                {errorMessage}
+                </Typography>
+                )}
+              </Grid>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"

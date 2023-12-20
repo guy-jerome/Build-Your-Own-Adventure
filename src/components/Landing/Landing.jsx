@@ -17,12 +17,13 @@ export default function Landing({currentAdventure, handleCurrentAdventure}){
 
   return(
     <Container
-    maxWidth="lg"
+    maxWidth="md"
     sx={{
       display: "flex",
       flexDirection: "column",
       alignContent: "center",
       justifyContent: "center",
+      backgroundColor: "accent.main"
     }}
     >
       <Banner/>
@@ -48,7 +49,9 @@ export default function Landing({currentAdventure, handleCurrentAdventure}){
             <Button onClick={()=>{navigate('/login')}}>Login</Button>
             <Button onClick={()=>{navigate('/register')}}>Register</Button>
         </Box>
-        <Box>
+        <Box sx={{border: 4,
+              borderColor: 'secondary.main',
+              borderRadius: 2, width:'50%'}}>
           <Typography variant='h5'>Featured Adventures</Typography>
           <Adventures currentAdventure={currentAdventure} handleCurrentAdventure={handleCurrentAdventure}/>
         </Box>

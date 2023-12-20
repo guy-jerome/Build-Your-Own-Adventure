@@ -5,7 +5,7 @@ import Adventure from "./Adventure.jsx";
 import LocationBuilder from "./LocationBuilder.jsx"
 import Game from "../Game/Game.jsx"
 import Banner from "../Banner/Banner.jsx"
-export default function AdventureBuilder({currentAdventure,handleCurrentAdventure, updateAdventure}){
+export default function AdventureBuilder({currentAdventure, handleCurrentAdventure, updateAdventure}){
     //Can be adventure/location/testGame
     const [builderPage, setBuilderPage] = useState("adventure")
 
@@ -27,7 +27,12 @@ export default function AdventureBuilder({currentAdventure,handleCurrentAdventur
     }
 
     return(
-      <Container>
+      <Container maxWidth="md"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "accent.main",
+      }}>
         <Banner/>
         {checkBuilderPage()}
       </Container> 

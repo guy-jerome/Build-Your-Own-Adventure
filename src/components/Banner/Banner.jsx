@@ -13,7 +13,7 @@ export default function ButtonAppBar() {
   const navigate = useNavigate()
   const theme = useTheme();
   return (
-    <Box sx={{ flexGrow: 1, backgroundColor:theme.palette.background.main, }}>
+    <Box sx={{ flexGrow: 1, backgroundColor:theme.palette.background.main}}>
       <Button onClick={()=>{navigate('/')}}>
         <img
           src={logo}

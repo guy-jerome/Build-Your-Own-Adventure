@@ -9,11 +9,13 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import { UserContext } from '../../context/UserContext';
 import Banner from '../Banner/Banner';
+import { useNavigate } from 'react-router-dom';
 
-export default function Account() {
+export default function Account({handleCurrentAdventure}) {
   const { user, url } = useContext(UserContext);
   const [userAdventures, setUserAdventures] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getAdventures() {
@@ -29,6 +31,11 @@ export default function Account() {
     getAdventures();
   }, [url, user.username]);
 
+  function playGame(adventure) {
+    handleCurrentAdventure(adventure);
+    navigate('/game');
+  }
+
   return (
     <Container>
       <Banner />
@@ -37,7 +44,7 @@ export default function Account() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'tan',
+          backgroundColor: 'accent.main',
           p: 10,
           minHeight: '100vh',
         }}
@@ -64,7 +71,7 @@ export default function Account() {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
+            flexWrap:'wrap',
             alignSelf: 'center',
             p: 2,
             border: 4,
@@ -78,8 +85,10 @@ export default function Account() {
           ) : (
             userAdventures &&
             userAdventures.map((adventure) => (
-              <Box key={adventure._id} sx={{ display: 'flex', alignItems: 'center', my: 1 }}>
-                <Button variant="outlined" sx={{ mr: 1 }}>
+              <Box key={adventure._id} sx={{ display: 'flex', alignItems: 'center', m:.5, border: 4,
+              borderColor: 'secondary.main',
+              borderRadius: 2,}}>
+                <Button variant="contained" onClick={()=>{playGame(adventure)}}>
                   {adventure.name}
                 </Button>
                 <IconButton aria-label="edit">

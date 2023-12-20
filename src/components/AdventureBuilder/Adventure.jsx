@@ -20,7 +20,7 @@ export default function Adventure({ handleCurrentAdventure, handleBuilderPage}) 
   };
 
   return (
-    <Box>
+    <Box sx={{height:"100vh"}}>
       <Typography variant="h4" gutterBottom>
         Adventure Setup
       </Typography>

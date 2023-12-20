@@ -55,7 +55,7 @@ export default function App() {
         />
         <Route
           path="/account"
-          element={ <Account />}
+          element={ <Account handleCurrentAdventure={handleCurrentAdventure}/>}
         />
         <Route render={() => <div>Error: Page not found</div>} />
       </Routes>

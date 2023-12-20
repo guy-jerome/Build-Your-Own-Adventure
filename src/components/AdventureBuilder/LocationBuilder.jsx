@@ -4,6 +4,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Autocomplete, InputLabel, TextField} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete'
 
 import Path from './Path.jsx'
 import location from "../../classes/location.js";
@@ -73,10 +75,16 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
   }
 
   async function saveAdventure(){
-    const res = await axios.post(`${url}/adventures`,currentAdventure)
-    console.log(res.data)
-    handleCurrentAdventure(res.data)
-    setLocations(currentAdventure.locations)
+    if (currentAdventure._id){
+      const res = await axios.patch(`${url}/adventures/${currentAdventure._id}`,currentAdventure)
+      handleCurrentAdventure(res.data)
+      setLocations(currentAdventure.locations)
+    }else{
+      const res = await axios.post(`${url}/adventures`,currentAdventure)
+      handleCurrentAdventure(res.data)
+      setLocations(currentAdventure.locations)
+    }
+
   }
 
   function handleNew(){
@@ -120,6 +128,9 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
           />
           <Button onClick={handleAddPath}>Add</Button>
           <Button onClick={handleNew}>New</Button>
+          <IconButton aria-label="delete" size="large" onClick={()=>{}}>
+          <DeleteIcon fontSize="xl" />
+          </IconButton>
         </Box>
         {/* Display the paths */}
           {paths.map((path, index) => (

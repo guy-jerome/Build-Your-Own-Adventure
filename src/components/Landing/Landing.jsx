@@ -44,7 +44,7 @@ export default function Landing({currentAdventure, handleCurrentAdventure}){
           )
           } */}
             <Button onClick={()=>{navigate('/builder')}}>Build An Adventure</Button>
-            <Button>{`Go to ${user.username}'s Profile`}</Button>
+            <Button onClick={()=>{navigate('/account')}}>{`Go to ${user.username}'s Profile`}</Button>
             <Button onClick={()=>{navigate('/login')}}>Login</Button>
             <Button onClick={()=>{navigate('/register')}}>Register</Button>
         </Box>

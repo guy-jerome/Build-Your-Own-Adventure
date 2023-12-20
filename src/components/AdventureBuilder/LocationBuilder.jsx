@@ -58,6 +58,11 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
     setPaths((prevPaths) => prevPaths.filter((i) => i !== path));
   }
 
+  function handleDeleteLocation(){
+    setLocations(locations.filter((location)=>(location!==currentLocation)))
+    handleNew()
+  }
+
   async function saveLocation(){
     if (!currentLocation){
       const node = new location(locationName,locationDescription)
@@ -126,9 +131,9 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
             onChange={(event, newValue) => setSelectedLocation(newValue)}
             renderInput={(params) => <TextField {...params} label="Locations" />}
           />
-          <Button onClick={handleAddPath}>Add</Button>
-          <Button onClick={handleNew}>New</Button>
-          <IconButton aria-label="delete" size="large" onClick={()=>{}}>
+          <Button variant='contained' onClick={handleAddPath} sx={{width:124}}>Add</Button>
+          <Button variant='contained' onClick={handleNew} sx={{width:124}}>New</Button>
+          <IconButton aria-label="delete" size="large" sx={{width:124}} onClick={handleDeleteLocation}>
           <DeleteIcon fontSize="xl" />
           </IconButton>
         </Box>
@@ -136,8 +141,8 @@ export default function LocationCreate({currentAdventure, updateAdventure, handl
           {paths.map((path, index) => (
             <Path key={index} path={path} handleDelete={handleDelete} paths={paths}/>
           ))}
-        <Button variant='outline' onClick={saveLocation}>Save Location</Button>
-        <Button variant='outline' onClick={saveAdventure}>Save Adventure</Button>
+        <Button variant='contained' onClick={saveLocation}>Save Location</Button>
+        <Button variant='contained' onClick={saveAdventure}>Save Adventure</Button>
         <Locations locations={locations} handleSetLocation={handleSetLocation}/>
       </>
   );

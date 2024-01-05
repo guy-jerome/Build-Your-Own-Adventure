@@ -1,8 +1,14 @@
 import OpenAI from "openai";
 import dotenv from "dotenv";
+import readline from "readline"
 dotenv.config();
 
-const openai = new OpenAI({apiKey: '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'})
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+const openai = new OpenAI({apiKey: process.env.CHATGPT_API_KEY})
 
 
 async function getResponse(messages,functions, functionName){
@@ -28,8 +34,22 @@ async function generateScene(){
                     description: "This is the scene description that lays out the scenario and provides context for the options"
                 },
                 sceneOptions:{
-                    type:"array",
-                    description: "These are the various descriptions of the options you can take from 0 to about 4"
+                    type:"object",
+                    description: "These are the various descriptions of the options you can take",
+                    properties:{
+                        option1:{
+                            type:"string",
+                            description:"This is one of the options. "
+                        },
+                        option2:{
+                            type:"string",
+                            description:"This is one of the options. "
+                        },
+                        option3:{
+                            type:"string",
+                            description:"This is one of the options. "
+                        },
+                    }
                 }
             }
         }
@@ -44,10 +64,24 @@ async function generateScene(){
         {
             role:"user",
             content: instructionPrompt
-        }
+        },
     ]
-    const response = await getResponse(messages,[scene],"scene")
-    console.log(response.choices[0].message.function_call.arguments)
+
+    async function runScene(){
+        const response = await getResponse(messages,[scene],"scene")
+        console.log(response.choices[0].message.function_call.arguments)
+        messages.push({role:"assistant", content:response.choices[0].message.function_call.arguments})
+        rl.question("What do you want to do?", (selection)=>{
+            messages.push({role:"user", content:`The user selected:${selection}`})
+            runScene()
+        })
+    }
+    runScene()
+    
+
+
+
+
 }
 
 generateScene();

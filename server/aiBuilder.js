@@ -35,7 +35,7 @@ async function generateScene(){
                 },
                 sceneOptions:{
                     type:"object",
-                    description: "These are the various descriptions of the options you can take",
+                    description: "These are the various descriptions of the options you can take some smarter and others worse",
                     properties:{
                         option1:{
                             type:"string",
@@ -55,7 +55,7 @@ async function generateScene(){
         }
     }
     const systemContent = "You are a professional choose your own adventure writer with over 40 years of experiance.";
-    const instructionPrompt = "Create a choose your own adventure about a basic day in the life of an average person."
+    const instructionPrompt = "Create a choose your own adventure about a basic day in the life of an average person but make it exciting and engaging."
     const messages = [
         {
             role:"system",

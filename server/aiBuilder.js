@@ -35,7 +35,7 @@ async function generateScene(){
                 },
                 sceneOptions:{
                     type:"object",
-                    description: "These are the various descriptions of the options you can take some smarter and others worse",
+                    description: "These are the various descriptions of the options you can take some smarter and others worse Can you make it so that some options do not appear?",
                     properties:{
                         option1:{
                             type:"string",

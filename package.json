@@ -27,6 +27,7 @@
     "express": "^4.18.2",
     "mongoos": "^0.0.1-security",
     "mongoose": "^8.0.3",
+    "openai": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0"

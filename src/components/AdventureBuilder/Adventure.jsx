@@ -5,17 +5,29 @@ import adventure from "../../classes/adventure.js";
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 
-export default function Adventure({ handleCurrentAdventure, handleBuilderPage}) {
+export default function Adventure({ handleCurrentAdventure, handleBuilderPage }) {
 
   const {user} = useContext(UserContext)
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [error, setError] = useState(""); // State to store error message
 
+  
   const handleStartCreating = () => {
-    // Create an instance of the Adventure class with the provided title and description
-    const newAdventure = new adventure(title, description,user._id );
-    handleCurrentAdventure(newAdventure)
-    handleBuilderPage("location")
+    // Check if title and description are empty
+    if (title.trim() === "") {
+          setError("Please enter a title.");
+          return;
+        } 
+    else if (description.trim() === "") {
+          setError("Please provide a description.");
+          return;
+        }
+
+    // Create the adventure and proceed as before
+    const newAdventure = new adventure(title, description, user._id);
+    handleCurrentAdventure(newAdventure);
+    handleBuilderPage("location");
   };
 
   return (
@@ -29,7 +41,9 @@ export default function Adventure({ handleCurrentAdventure, handleBuilderPage}) 
           fullWidth
           variant="outlined"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {setError("");setTitle(e.target.value)}}
+          error={!!error} // Show error state for title input
+          helperText={error && "Title cannot be empty"}
         />
       </Box>
       <Box mt={2}>
@@ -40,11 +54,13 @@ export default function Adventure({ handleCurrentAdventure, handleBuilderPage}) 
           rows={4}
           variant="outlined"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {setError("");setDescription(e.target.value)}}
+          error={!!error} // Show error state for description input
+          helperText={error && "Description cannot be empty"}
         />
       </Box>
       <Box mt={2}>
-        <Button variant="contained" color="primary" onClick={handleStartCreating}>
+        <Button variant="contained" color="primary" onClick={handleStartCreating} disabled={!!error}>
           Start Creating
         </Button>
       </Box>

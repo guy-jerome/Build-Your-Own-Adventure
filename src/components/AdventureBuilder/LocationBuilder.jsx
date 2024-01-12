@@ -23,6 +23,7 @@ export default function LocationCreate({ currentAdventure, updateAdventure, hand
   const [locationName, setLocationName] = useState("");
   const [locationDescription, setLocationDescription] = useState("");
   const [currentLocation, setCurrentLocation] = useState(null);
+  const [isLocationCreated, setIsLocationCreated] = useState(false);
 
   async function addLocation(location) {
     await setLocations([...locations, location]);
@@ -64,6 +65,10 @@ export default function LocationCreate({ currentAdventure, updateAdventure, hand
   }
 
   async function saveAdventure() {
+    if (!isLocationCreated) {
+      // Show an error message or alert the user that a location is required
+      return;
+    }
     if (currentAdventure._id) {
       const res = await axios.patch(`${url}/adventures/${currentAdventure._id}`, currentAdventure);
       handleCurrentAdventure(res.data);
@@ -91,6 +96,7 @@ export default function LocationCreate({ currentAdventure, updateAdventure, hand
 
   useEffect(() => {
     updateAdventure(locations);
+    setIsLocationCreated(locations.length > 0)
   }, [locations]);
 
   return (
@@ -127,7 +133,7 @@ export default function LocationCreate({ currentAdventure, updateAdventure, hand
         ))}
       </Box>
       <Button variant='contained' sx={{ width: "30%" }} onClick={saveLocation}>Save Location</Button>
-      <Button variant='contained' sx={{ width: "30%" }} onClick={saveAdventure}>Save Adventure</Button>
+      <Button variant='contained' sx={{ width: "30%" }} onClick={saveAdventure} disabled={!isLocationCreated}>Save Adventure</Button>
       <Typography variant='h4'>Locations:</Typography>
       <Locations locations={locations} handleSetLocation={handleSetLocation} />
       </Box>
